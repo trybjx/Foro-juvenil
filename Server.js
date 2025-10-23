@@ -1,5 +1,4 @@
 import express from "express";
-import { registerRoutes } from "./server/routes.js"; // Asegúrate de que exista tu routes.js
 import path from "path";
 
 const app = express();
@@ -22,8 +21,10 @@ app.use((req, res, next) => {
   next();
 });
 
-// Registrar rutas
-registerRoutes(app);
+// Endpoint de ejemplo
+app.get("/api/hello", (req, res) => {
+  res.json({ message: "Bienvenido a tu foro 🎯" });
+});
 
 // Servir frontend estático desde client/
 app.use(express.static(path.join(process.cwd(), "client")));
@@ -41,8 +42,8 @@ app.use((err, req, res, next) => {
   console.error(err);
 });
 
-// Escuchar puerto dinámico
+// Escuchar puerto dinámico en 0.0.0.0 para Render
 const port = parseInt(process.env.PORT || "5000", 10);
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   console.log(`Servidor corriendo en el puerto ${port}`);
 });
